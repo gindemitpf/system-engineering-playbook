@@ -2,7 +2,7 @@
 ---
 
 # Интерфейсы ICD-lite
-<iframe src="https://gindemitpf/system-engineering-playbook/tree/main/src/swagger/swagger.html" width="100%" height="1500px" style="border:0;" allowfullscreen="allowfullscreen"></iframe>
+<iframe src="https://gindemitpf.github.io/system-engineering-playbook/tree/main/src/swagger/swagger.html" width="100%" height="1500px" style="border:0;" allowfullscreen="allowfullscreen"></iframe>
 ---
 
 ## 5.1. POST /api/v1/resumes
