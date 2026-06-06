@@ -177,57 +177,470 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="try"><a class="header" href="#try">Try</a></h2>
-<p><code>Hello world</code></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="md-example"><a class="header" href="#md-example">MD Example</a></h1>
-<h3 id="Структура-проекта"><a class="header" href="#Структура-проекта">Структура проекта</a></h3>
+                        <h1 id="О-работе-ai-сервис-первичного-отбора-кандидатов"><a class="header" href="#О-работе-ai-сервис-первичного-отбора-кандидатов">О работе: AI-сервис первичного отбора кандидатов</a></h1>
+<p><strong>Назначение системы:</strong> автоматизация первичного анализа резюме, ранжирование кандидатов на основе соответствия требованиям вакансии и генерация персонализированных вопросов для собеседования.</p>
+<p><strong>Система (SoI):</strong> интеллектуальная система первичного отбора кандидатов, включающая Web UI, сервисы обработки резюме и AI-анализа, а также модуль рекомендаций.</p>
+<p><strong>Основные сценарии:</strong> загрузка резюме, интеллектуальный анализ навыков, сопоставление (matching), ранжирование и генерация вопросов.</p>
+<div style="break-before: page; page-break-before: always;"></div><p>Вот файл <strong>context.md</strong>, переработанный для вашего AI-сервиса подбора кандидатов с сохранением структуры исходного примера.</p>
+<hr />
+<h1 id="Контекст-и-границы-soi"><a class="header" href="#Контекст-и-границы-soi">Контекст и границы SoI</a></h1>
+<h2 id="11-Цель-системы"><a class="header" href="#11-Цель-системы">1.1. Цель системы</a></h2>
+<p>Целью системы является автоматизация первичного отбора кандидатов, повышение объективности оценки навыков и снижение рутинной нагрузки на HR-департамент за счёт интеллектуального анализа резюме, автоматизированного сопоставления с требованиями вакансий и генерации уточняющих вопросов для собеседований.</p>
+<p>Система должна обеспечивать качественную обработку неструктурированных данных резюме, предотвращать предвзятость при первичном скрининге, учитывать специфику вакансий и предоставлять HR-специалистам актуальные данные для принятия решений о приглашении на интервью.</p>
+<h2 id="12-Внешние-акторы"><a class="header" href="#12-Внешние-акторы">1.2. Внешние акторы</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Актор</th><th>Описание</th><th>Основной интерес</th></tr></thead><tbody>
+<tr><td>Кандидат</td><td>Физическое лицо, откликающееся на вакансию</td><td>Быстро загрузить резюме, получить обратную связь, пройти первичную оценку</td></tr>
+<tr><td>HR</td><td>Специалист по подбору персонала</td><td>Управлять вакансиями, видеть рейтинг кандидатов, получать подсказки для интервью</td></tr>
+<tr><td>Руководитель отдела</td><td>Заказчик вакансии</td><td>Утверждать критерии отбора, просматривать отобранных кандидатов</td></tr>
+<tr><td>Администратор</td><td>Ответственный за доступы и настройки AI</td><td>Контролировать работоспособность системы, доступы, мониторинг AI-моделей</td></tr>
+</tbody></table>
+</div>
+<h2 id="13-Внешние-системы"><a class="header" href="#13-Внешние-системы">1.3. Внешние системы</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Внешняя система</th><th>Обоснование интеграции</th><th>Тип взаимодействия</th></tr></thead><tbody>
+<tr><td>AI Model API (LLM)</td><td>Анализ текста, извлечение навыков и генерация вопросов требуют специализированных NLP-моделей — вынесение в API снижает зависимость от локальных ресурсов</td><td>REST API / gRPC</td></tr>
+<tr><td>Cloud Storage</td><td>Хранение оригиналов резюме в различных форматах (PDF, DOCX) требует масштабируемого объектного хранилища</td><td>SDK / API</td></tr>
+<tr><td>SSO / IdP</td><td>Централизованное управление учетными записями сотрудников организации</td><td>OAuth2/OIDC, JWT</td></tr>
+<tr><td>Система мониторинга</td><td>Обеспечение наблюдаемости (логи, метрики) работы сервисов и API моделей</td><td>Metrics endpoint, logs</td></tr>
+<tr><td>CRM / ATS</td><td>Интеграция с существующими системами компании для выгрузки результатов отбора</td><td>REST API / Webhooks</td></tr>
+</tbody></table>
+</div>
+<h2 id="14-Границы-системы"><a class="header" href="#14-Границы-системы">1.4. Границы системы</a></h2>
+<h3 id="Внутри-soi"><a class="header" href="#Внутри-soi">Внутри SoI</a></h3>
+<p>В состав системы входят:</p>
 <ul>
-<li><code>src/</code> - основная директория с контентом
+<li>веб-интерфейс (Web UI) для HR и руководителей;</li>
+<li>сервис обработки резюме (Resume Service);</li>
+<li>сервис анализа и сопоставления (AI Analysis &amp; Recommendation Service);</li>
+<li>API Gateway / Backend API;</li>
+<li>основная база данных (PostgreSQL);</li>
+<li>брокер сообщений (Message Broker) для асинхронной обработки;</li>
+<li>модуль генерации вопросов (LLM Integration Client);</li>
+<li>система журналирования и аудита.</li>
+</ul>
+<h3 id="Вне-soi"><a class="header" href="#Вне-soi">Вне SoI</a></h3>
+<p>За пределами системы находятся:</p>
 <ul>
-<li><code>SUMMARY.md</code> - файл навигации/оглавления</li>
-<li>Все остальные <code>.md</code> файлы - страницы документации</li>
+<li>корпоративный SSO / IdP;</li>
+<li>внешние AI-провайдеры (OpenAI, Anthropic, и др.);</li>
+<li>внешние системы хранения файлов (AWS S3 и аналоги);</li>
+<li>существующие корпоративные ATS/CRM-системы;</li>
+<li>внешние средства мониторинга;</li>
+<li>фактические собеседования и итоговые решения HR;</li>
+<li>политика компании по критериям найма.</li>
 </ul>
-</li>
-</ul>
-<h3 id="Расположение-файлов"><a class="header" href="#Расположение-файлов">Расположение файлов</a></h3>
-<ul>
-<li>Все Markdown файлы должны находиться в директории <code>src/</code>. Рекомендуется ссылаться на md файлы из SUMMARY.md (см. пример в SUMMARY.md).</li>
-<li>Изображения и другие ресурсы рекомендуется хранить в релеватных папках <code>src/images</code>, <code>src/diagrams</code> и тд.</li>
-</ul>
-<h3 id="Локальная-разработка"><a class="header" href="#Локальная-разработка">Локальная разработка</a></h3>
+<h2 id="15-Основные-потоки-данных"><a class="header" href="#15-Основные-потоки-данных">1.5. Основные потоки данных</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>№</th><th>Источник</th><th>Получатель</th><th>Данные / событие</th><th>Назначение</th></tr></thead><tbody>
+<tr><td>DF-01</td><td>Кандидат</td><td>Web UI</td><td>Загрузка файла резюме</td><td>Начало процесса отбора</td></tr>
+<tr><td>DF-02</td><td>Web UI</td><td>Resume Service</td><td>Файл резюме</td><td>Сохранение и парсинг</td></tr>
+<tr><td>DF-03</td><td>Resume Service</td><td>Message Broker</td><td>Событие ResumeUploaded</td><td>Запуск асинхронного анализа</td></tr>
+<tr><td>DF-04</td><td>AI Analysis Service</td><td>AI Model API</td><td>Текст резюме</td><td>Извлечение навыков (LLM)</td></tr>
+<tr><td>DF-05</td><td>AI Analysis Service</td><td>PostgreSQL</td><td>Извлечённые сущности (навыки)</td><td>Фиксация данных анализа</td></tr>
+<tr><td>DF-06</td><td>HR</td><td>Web UI</td><td>Привязка вакансии к кандидату</td><td>Инициация сопоставления</td></tr>
+<tr><td>DF-07</td><td>Recommendation Service</td><td>PostgreSQL</td><td>Вакансия + Навыки кандидата</td><td>Расчёт рейтинга (Score)</td></tr>
+<tr><td>DF-08</td><td>Web UI</td><td>LLM Integration</td><td>Запрос генерации вопросов</td><td>Создание скрипта интервью</td></tr>
+<tr><td>DF-09</td><td>Recommendation Service</td><td>HR</td><td>Рейтинг кандидатов</td><td>Управленческий контроль</td></tr>
+</tbody></table>
+</div>
+<h2 id="16-Допущения-и-ограничения"><a class="header" href="#16-Допущения-и-ограничения">1.6. Допущения и ограничения</a></h2>
 <ol>
-<li>Установите MDBook <a href="https://rust-lang.github.io/mdBook/guide/installation.html">инструкция</a></li>
-<li>Запустите сервер разработки:</li>
+<li>Система ориентирована на работу с резюме в форматах PDF и DOCX.</li>
+<li>AI-анализ является вспомогательным инструментом; финальное решение всегда принимает человек (Human-in-the-loop).</li>
+<li>Система использует асинхронную обработку для тяжелых AI-операций.</li>
+<li>Персональные данные кандидатов (PII) должны быть обезличены перед отправкой во внешние AI API.</li>
+<li>При недоступности AI API система должна накапливать задачи в очереди (Retry policy).</li>
+<li>Безопасность данных обеспечивается шифрованием "at rest" и "in transit".</li>
+<li>Доступ к системе для HR и руководителей разграничен по ролям (RBAC).</li>
+<li>Администратор обеспечивает мониторинг стоимости и эффективности использования внешних AI-моделей.</li>
 </ol>
-<pre><code class="language-bash">mdbook serve --open
+<div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>CONOPS</strong> (Концепция эксплуатации), адаптированный для вашего <strong>AI-сервиса подбора кандидатов</strong>.</p>
+<hr />
+<h1 id="conops--opscon"><a class="header" href="#conops--opscon">CONOPS / OPSCON</a></h1>
+<h2 id="21-Роли"><a class="header" href="#21-Роли">2.1. Роли</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Роль</th><th>Описание деятельности</th><th>Основные операции</th></tr></thead><tbody>
+<tr><td>Кандидат</td><td>Взаимодействует с системой для участия в отборе</td><td>Загрузка резюме, просмотр статуса, ответы на вопросы</td></tr>
+<tr><td>HR</td><td>Управляет процессом найма и потоком кандидатов</td><td>Создание вакансий, анализ отчетов, приглашение на интервью</td></tr>
+<tr><td>Руководитель отдела</td><td>Формирует требования и принимает решение о найме</td><td>Определение критериев отбора, выбор финалистов</td></tr>
+<tr><td>Администратор</td><td>Обеспечивает эксплуатацию системы</td><td>Настройка доступа, контроль использования AI-лимитов</td></tr>
+</tbody></table>
+</div>
+<h2 id="22-Сценарий-uc-01-Загрузка-и-первичная-обработка-резюме"><a class="header" href="#22-Сценарий-uc-01-Загрузка-и-первичная-обработка-резюме">2.2. Сценарий UC-01. Загрузка и первичная обработка резюме</a></h2>
+<p><strong>Цель:</strong> автоматическое извлечение данных из резюме кандидата для дальнейшего анализа.</p>
+<p><strong>Участники:</strong> кандидат, Web UI, Resume Service, Message Broker, AI Analysis Service, PostgreSQL.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Кандидат загружает файл резюме (PDF/DOCX) через Web UI.</li>
+<li>Resume Service сохраняет файл в облачное хранилище и публикует событие <code>ResumeUploaded</code> в Message Broker.</li>
+<li>AI Analysis Service подписывается на событие, скачивает файл и отправляет текст резюме в LLM для парсинга.</li>
+<li>AI Analysis Service сохраняет структурированные данные (навыки, опыт, образование) в PostgreSQL.</li>
+<li>Система обновляет статус кандидата на «Готов к анализу».</li>
+</ol>
+<p><strong>Режимы деградации:</strong></p>
+<ul>
+<li>При недоступности AI API задача встает в очередь (Retry policy) до восстановления сервиса.</li>
+</ul>
+<h2 id="23-Сценарий-uc-02-Сопоставление-с-вакансией-matching"><a class="header" href="#23-Сценарий-uc-02-Сопоставление-с-вакансией-matching">2.3. Сценарий UC-02. Сопоставление с вакансией (Matching)</a></h2>
+<p><strong>Цель:</strong> ранжирование кандидатов на основе их соответствия требованиям конкретной вакансии.</p>
+<p><strong>Участники:</strong> HR, Web UI, Recommendation Service, PostgreSQL.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>HR привязывает конкретную вакансию к профилю кандидата.</li>
+<li>Recommendation Service извлекает профиль кандидата и требования вакансии.</li>
+<li>Система производит семантическое сопоставление навыков (Match Score) и формирует рейтинг (0-100%).</li>
+<li>HR получает список кандидатов, отсортированный по уровню соответствия.</li>
+</ol>
+<p><strong>Исключения:</strong></p>
+<ul>
+<li>Недостаточно данных в резюме для объективной оценки.</li>
+</ul>
+<p><strong>Результат:</strong> HR видит список кандидатов с обоснованием рейтинга.</p>
+<h2 id="24-Сценарий-uc-03-Генерация-вопросов-для-интервью"><a class="header" href="#24-Сценарий-uc-03-Генерация-вопросов-для-интервью">2.4. Сценарий UC-03. Генерация вопросов для интервью</a></h2>
+<p><strong>Цель:</strong> подготовка персонализированного скрипта интервью для HR на основе выявленных "пробелов" в навыках.</p>
+<p><strong>Участники:</strong> HR, Web UI, Recommendation Service, LLM, PostgreSQL.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>HR выбирает кандидата из списка для приглашения на собеседование.</li>
+<li>Recommendation Service выявляет области, где квалификация кандидата ниже требований вакансии.</li>
+<li>Система отправляет запрос в LLM для генерации 3-5 уточняющих вопросов.</li>
+<li>Скрипт вопросов сохраняется в карточке кандидата.</li>
+</ol>
+<p><strong>Результат:</strong> HR получает готовый список вопросов, помогающих закрыть сомнения по кандидату.</p>
+<h2 id="25-Сценарий-uc-04-Работа-при-недоступности-ai-модели"><a class="header" href="#25-Сценарий-uc-04-Работа-при-недоступности-ai-модели">2.5. Сценарий UC-04. Работа при недоступности AI-модели</a></h2>
+<p><strong>Цель:</strong> сохранение работоспособности системы (загрузка и хранение данных) при сбое внешнего AI API.</p>
+<p><strong>Участники:</strong> Resume Service, Message Broker, AI Analysis Service, AI Model API.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>Резюме загружается и сохраняется в БД.</li>
+<li>Событие обработки отправляется в Message Broker.</li>
+<li>AI Analysis Service при попытке обращения к AI Model API получает ошибку 5xx.</li>
+<li>Система переводит задачу в статус <code>pending_retry</code> и выполняет отложенную отправку согласно политике (exponential backoff).</li>
+</ol>
+<p><strong>Результат:</strong> данные кандидата не теряются; анализ выполняется автоматически сразу после восстановления доступа к AI API.</p>
+<h2 id="26-Сценарий-uc-05-Управление-доступом-и-аудит"><a class="header" href="#26-Сценарий-uc-05-Управление-доступом-и-аудит">2.6. Сценарий UC-05. Управление доступом и аудит</a></h2>
+<p><strong>Цель:</strong> обеспечение безопасности данных и прозрачности работы AI.</p>
+<p><strong>Участники:</strong> администратор, HR, PostgreSQL.</p>
+<p><strong>Основной поток:</strong></p>
+<ol>
+<li>HR или руководитель авторизуются через корпоративный SSO.</li>
+<li>Система проверяет права (RBAC) на просмотр конкретной вакансии.</li>
+<li>Любое изменение рейтинга или просмотр ПДн фиксируется в Audit Log.</li>
+</ol>
+<p><strong>Результат:</strong> исключение несанкционированного доступа к резюме и прозрачная история работы с кандидатами.</p>
+<div style="break-before: page; page-break-before: always;"></div><p>Вот адаптированный файл <strong>requirements.md</strong> для вашего <strong>AI-сервиса подбора кандидатов</strong>, составленный по структуре вашего шаблона.</p>
+<hr />
+<h1 id="Требования"><a class="header" href="#Требования">Требования</a></h1>
+<h2 id="31-stakeholder-requirements"><a class="header" href="#31-stakeholder-requirements">3.1. Stakeholder requirements</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>ID</th><th>Заинтересованная сторона</th><th>Требование</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>SR-SH-1</td><td>Кандидат</td><td>Система должна позволять кандидату загрузить резюме в форматах PDF или DOCX.</td><td>D, T</td></tr>
+<tr><td>SR-SH-2</td><td>Кандидат</td><td>Система должна предоставлять кандидату статус обработки его резюме.</td><td>D, T</td></tr>
+<tr><td>SR-SH-3</td><td>HR</td><td>Система должна автоматически извлекать ключевые навыки и опыт из текста резюме.</td><td>D, I, T</td></tr>
+<tr><td>SR-SH-4</td><td>HR</td><td>Система должна рассчитывать процент соответствия кандидата требованиям конкретной вакансии (Match Score).</td><td>D, T, A</td></tr>
+<tr><td>SR-SH-5</td><td>HR</td><td>Система должна генерировать список уточняющих вопросов для интервью на основе профиля кандидата.</td><td>D, T</td></tr>
+<tr><td>SR-SH-6</td><td>HR</td><td>Система должна позволять фильтровать и сортировать кандидатов по рейтингу соответствия.</td><td>D, T</td></tr>
+<tr><td>SR-SH-7</td><td>Руководитель отдела</td><td>Система должна предоставлять сводный отчет по качеству воронки кандидатов.</td><td>D, A</td></tr>
+<tr><td>SR-SH-8</td><td>Системный администратор</td><td>Система должна поддерживать вход через корпоративный SSO и ролевую модель доступа (RBAC).</td><td>I, T</td></tr>
+<tr><td>SR-SH-9</td><td>Системный администратор</td><td>Система должна обеспечивать полный аудит действий сотрудников при просмотре персональных данных.</td><td>I, A, T</td></tr>
+<tr><td>SR-SH-10</td><td>Организация</td><td>Система должна обеспечивать обезличивание персональных данных при передаче во внешние AI-модели.</td><td>I, A</td></tr>
+</tbody></table>
+</div>
+<h2 id="32-system-requirements"><a class="header" href="#32-system-requirements">3.2. System requirements</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>ID</th><th>Требование</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>SR-SYS-1</td><td>Система должна выполнять парсинг файлов резюме с использованием OCR и NLP-библиотек.</td><td>T</td></tr>
+<tr><td>SR-SYS-2</td><td>Система должна нормализовать данные резюме в единый JSON-формат (навыки, опыт, образование).</td><td>T, I</td></tr>
+<tr><td>SR-SYS-3</td><td>Система должна публиковать событие <code>ResumeUploaded</code> после успешного сохранения файла в хранилище.</td><td>T</td></tr>
+<tr><td>SR-SYS-4</td><td>Система должна использовать асинхронную очередь для обработки анализа резюме через AI.</td><td>I, T</td></tr>
+<tr><td>SR-SYS-5</td><td>Система должна обеспечивать идемпотентность при повторной загрузке одного и того же файла резюме тем же кандидатом.</td><td>I, T</td></tr>
+<tr><td>SR-SYS-6</td><td>Система должна вычислять Match Score на основе семантического сходства векторов навыков.</td><td>T, A</td></tr>
+<tr><td>SR-SYS-7</td><td>Система должна хранить историю изменений рейтинга кандидата для каждой вакансии.</td><td>T</td></tr>
+<tr><td>SR-SYS-8</td><td>Система должна генерировать от 3 до 5 вопросов при запросе HR-специалиста.</td><td>T</td></tr>
+<tr><td>SR-SYS-9</td><td>Система должна маскировать ФИО, телефон и email перед отправкой данных в AI API (PII Filtering).</td><td>I, T</td></tr>
+<tr><td>SR-SYS-10</td><td>Система должна поддерживать версионирование вакансий и критериев отбора.</td><td>T</td></tr>
+<tr><td>SR-SYS-11</td><td>Система должна предоставлять API для интеграции с внешними ATS через Webhooks.</td><td>T, I</td></tr>
+<tr><td>SR-SYS-12</td><td>Система должна блокировать доступ к профилю кандидата, если у пользователя нет прав на вакансию.</td><td>T, I</td></tr>
+<tr><td>SR-SYS-13</td><td>Система должна отправлять уведомления HR-специалисту о завершении анализа нового кандидата.</td><td>T</td></tr>
+<tr><td>SR-SYS-14</td><td>Система должна автоматически переводить задачи в статус <code>failed</code> после 3 неудачных попыток вызова AI API.</td><td>T, A</td></tr>
+<tr><td>SR-SYS-15</td><td>Система должна хранить логи доступа к данным в соответствии с политикой хранения (Retention Policy).</td><td>I, A</td></tr>
+</tbody></table>
+</div>
+<h2 id="33-nfr--требования-качества"><a class="header" href="#33-nfr--требования-качества">3.3. NFR / требования качества</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>ID</th><th>Категория</th><th>Требование</th><th>Метод проверки</th></tr></thead><tbody>
+<tr><td>NFR-1</td><td>Производительность</td><td>Время парсинга резюме не должно превышать 10 секунд для файла до 5 МБ.</td><td>T, A</td></tr>
+<tr><td>NFR-2</td><td>Производительность</td><td>Время получения Match Score не должно превышать 2 секунд при нагрузке 50 RPS.</td><td>T, A</td></tr>
+<tr><td>NFR-3</td><td>Доступность</td><td>Доступность API системы должна составлять не менее 99,9% в месяц.</td><td>A, I</td></tr>
+<tr><td>NFR-4</td><td>Масштабируемость</td><td>Система должна поддерживать обработку до 1000 резюме в час в пиковые периоды.</td><td>T, A</td></tr>
+<tr><td>NFR-5</td><td>Безопасность</td><td>Все персональные данные должны шифроваться алгоритмом AES-256 в базе данных.</td><td>I</td></tr>
+<tr><td>NFR-6</td><td>Точность</td><td>Точность извлечения ключевых навыков (F1-score) должна быть не ниже 85%.</td><td>T, A</td></tr>
+<tr><td>NFR-7</td><td>Наблюдаемость</td><td>Система должна логировать время отклика каждого вызова AI-модели.</td><td>I, A</td></tr>
+<tr><td>NFR-8</td><td>Совместимость</td><td>Поддержка форматов: .pdf, .docx, .doc, .txt.</td><td>T</td></tr>
+<tr><td>NFR-9</td><td>Устойчивость</td><td>При недоступности AI-модели система должна сохранять запрос в очереди и retry-ить с exponential backoff.</td><td>T, I</td></tr>
+<tr><td>NFR-10</td><td>UX</td><td>Процесс загрузки резюме для кандидата не должен превышать 2 кликов.</td><td>D, A</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>architecture.md</strong>, адаптированный для вашего <strong>AI-сервиса подбора кандидатов</strong> с сохранением структуры C4-архитектуры и ADR.</p>
+<hr />
+<h1 id="Архитектура-системы"><a class="header" href="#Архитектура-системы">Архитектура системы</a></h1>
+<h2 id="41-Общий-архитектурный-подход"><a class="header" href="#41-Общий-архитектурный-подход">4.1. Общий архитектурный подход</a></h2>
+<p>Система строится как модульная микросервисная информационная система с выделенными функциональными компонентами: управление резюме, интеллектуальный анализ (AI Analysis), рекомендации (Matching) и аудит. Анализ резюме является ресурсоёмкой и длительной операцией, поэтому система использует асинхронную модель обработки через очередь сообщений (Message Broker) для обеспечения отзывчивости UI.</p>
+<p>Критичные данные (профили кандидатов, результаты анализа) хранятся в PostgreSQL с соблюдением требований безопасности (шифрование, аудит доступа). Использование внешних AI-моделей (LLM) инкапсулировано в отдельном сервисе, что позволяет гибко менять провайдеров или модели без переписывания бизнес-логики.</p>
+<h2 id="42-c4-context"><a class="header" href="#42-c4-context">4.2. C4 Context</a></h2>
+<p>Контекстная диаграмма показывает систему как центр автоматизации найма:</p>
+<ul>
+<li>Кандидаты взаимодействуют с порталом для загрузки резюме;</li>
+<li>HR и руководители работают с Web UI для управления вакансиями и анализа кандидатов;</li>
+<li>Система интегрируется с внешними AI-провайдерами для NLP-задач;</li>
+<li>SSO используется для аутентификации сотрудников;</li>
+<li>Система мониторинга собирает метрики и логи;</li>
+<li>Корпоративная ATS/CRM интегрируется для обмена данными о закрытых вакансиях.</li>
+</ul>
+<h2 id="43-c4-container"><a class="header" href="#43-c4-container">4.3. C4 Container</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Контейнер</th><th>Назначение</th><th>Основные связи</th></tr></thead><tbody>
+<tr><td>Web UI</td><td>Интерфейс HR, руководителя и кандидата</td><td>API Gateway</td></tr>
+<tr><td>API Gateway</td><td>Единая точка входа, маршрутизация, RBAC, валидация</td><td>Все внутренние сервисы</td></tr>
+<tr><td>Resume Service</td><td>Загрузка, парсинг, хранение резюме</td><td>PostgreSQL, Object Storage, Message Broker</td></tr>
+<tr><td>AI Analysis Service</td><td>Интеграция с LLM, извлечение навыков</td><td>Message Broker, AI Model API</td></tr>
+<tr><td>Recommendation Service</td><td>Скоринг кандидатов, генерация вопросов</td><td>PostgreSQL, AI Analysis Service</td></tr>
+<tr><td>PostgreSQL</td><td>Хранение данных (кандидаты, вакансии, логи)</td><td>Все бэкенд-сервисы</td></tr>
+<tr><td>Message Broker</td><td>Асинхронная обработка (очередь анализа)</td><td>Resume Service, AI Analysis Service</td></tr>
+<tr><td>Auth Adapter</td><td>Проверка токенов, интеграция с SSO</td><td>SSO</td></tr>
+</tbody></table>
+</div>
+<h2 id="44-Ключевые-сущности"><a class="header" href="#44-Ключевые-сущности">4.4. Ключевые сущности</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Сущность</th><th>Описание</th><th>Основные поля</th></tr></thead><tbody>
+<tr><td>Candidate</td><td>Профиль кандидата</td><td>candidate_id, full_name, email, phone, created_at</td></tr>
+<tr><td>Resume</td><td>Файл резюме</td><td>resume_id, candidate_id, file_path, hash, status</td></tr>
+<tr><td>Skill</td><td>Извлеченный навык</td><td>skill_id, name, category, confidence_score</td></tr>
+<tr><td>Vacancy</td><td>Вакансия</td><td>vacancy_id, title, description, requirements, status</td></tr>
+<tr><td>Application</td><td>Отклик</td><td>application_id, candidate_id, vacancy_id, match_score, status</td></tr>
+<tr><td>InterviewScript</td><td>Скрипт вопросов</td><td>script_id, application_id, questions, generated_at</td></tr>
+<tr><td>AuditLog</td><td>Журнал действий</td><td>audit_id, actor_id, action, object_type, object_id, timestamp</td></tr>
+</tbody></table>
+</div>
+<h2 id="45-Механизм-защиты-и-идемпотентности"><a class="header" href="#45-Механизм-защиты-и-идемпотентности">4.5. Механизм защиты и идемпотентности</a></h2>
+<ol>
+<li><strong>Idempotency-Key</strong>: При загрузке резюме вычисляется хэш файла; повторная загрузка того же файла не запускает повторный AI-анализ.</li>
+<li><strong>PII Masking</strong>: Перед отправкой данных в AI Model API, персональные данные (ФИО, контакты) удаляются или заменяются токенами.</li>
+<li><strong>Transactional Integrity</strong>: Запись результатов анализа в PostgreSQL выполняется внутри транзакции.</li>
+</ol>
+<pre><code class="language-sql">CREATE UNIQUE INDEX ux_resume_hash 
+ON resumes (hash) 
+WHERE status IN ('processed', 'processing');
+
 </code></pre>
-<ol start="3">
-<li>Откройте http://localhost:3000 в браузере.</li>
-</ol>
-<h3 id="Конфигурация-репозитория"><a class="header" href="#Конфигурация-репозитория">Конфигурация репозитория</a></h3>
-<ol>
-<li>Сделайте fork репозитория <a href="https://github.com/Jho00/system-engineering-playbook">mdb</a></li>
-<li>Перейдите в настройки своего github репозитория. Выберите вкладку Actions -&gt; General. Установите "Read and write permissions" в категории Workflow permissions</li>
-</ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="drawio-example"><a class="header" href="#drawio-example">Drawio Example</a></h1>
-<h3 id="Создание-диаграммы"><a class="header" href="#Создание-диаграммы">Создание диаграммы</a></h3>
-<ol>
-<li>Создайте диаграмму используя <a href="https://app.diagrams.net/">draw.io</a></li>
-<li>Сохраните файл в формате <code>.drawio</code> в проект</li>
-<li>Добавьте файл в индексацию git и отправьте в github репозиторий</li>
-</ol>
-<h3 id="Добавление-диаграммы-в-документацию"><a class="header" href="#Добавление-диаграммы-в-документацию">Добавление диаграммы в документацию</a></h3>
-<p>Для вставки диаграммы используйте синтаксис из примера ниже, заметете, что необходимо указать ссылку на файл в репозитории.</p>
-<iframe class="drawio-viewer" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=diagram&url=https://raw.githubusercontent.com/bndroll/mdb/master/src/diagrams/qwe.drawio"></iframe><div style="break-before: page; page-break-before: always;"></div><h1 id="swagger-example"><a class="header" href="#swagger-example">Swagger Example</a></h1>
-<h3 id="Подготовка-swagger-спецификации"><a class="header" href="#Подготовка-swagger-спецификации">Подготовка Swagger-спецификации</a></h3>
-<ol>
-<li>Создайте файл спецификации API в формате YAML</li>
-<li>Сохраните файл как <code>swagger.yaml</code> в директорию <code>src/swagger/</code></li>
-<li>Убедитесь, что спецификация соответствует стандарту OpenAPI 3.0</li>
-</ol>
-<h3 id="Вставка-спецификации-в-документацию"><a class="header" href="#Вставка-спецификации-в-документацию">Вставка спецификации в документацию</a></h3>
-<p>Для вставки спецификации в документацию используйте синтаксис из примера ниже.</p>
-<iframe src="swagger/swagger.html" width="100%" height="1500px" style="border:0;" allowfullscreen="allowfullscreen"></iframe>
+<h2 id="46-adr"><a class="header" href="#46-adr">4.6. ADR</a></h2>
+<h3 id="adr-1-Асинхронная-обработка-резюме-через-message-broker"><a class="header" href="#adr-1-Асинхронная-обработка-резюме-через-message-broker">ADR-1. Асинхронная обработка резюме через Message Broker</a></h3>
+<p><strong>Контекст:</strong> AI-анализ занимает от 5 до 30 секунд.
+<strong>Решение:</strong> Использовать брокер сообщений для постановки задач анализа в очередь.
+<strong>Trade-off:</strong> Повышается сложность инфраструктуры, но пользовательский интерфейс остается отзывчивым (получает статус «в обработке» мгновенно).</p>
+<h3 id="adr-2-Использование-внешнего-ai-api-с-прослойкой-обезличивания"><a class="header" href="#adr-2-Использование-внешнего-ai-api-с-прослойкой-обезличивания">ADR-2. Использование внешнего AI API с прослойкой обезличивания</a></h3>
+<p><strong>Контекст:</strong> необходимо анализировать текст, содержащий ПДн.
+<strong>Решение:</strong> Анализ выполняется через API (например, OpenAI), но сервис перед отправкой запроса фильтрует PII.
+<strong>Trade-off:</strong> Усложнение сервиса анализа, но минимизация рисков компрометации персональных данных.</p>
+<h3 id="adr-3-Разделение-сервисов-анализа-и-рекомендаций"><a class="header" href="#adr-3-Разделение-сервисов-анализа-и-рекомендаций">ADR-3. Разделение сервисов анализа и рекомендаций</a></h3>
+<p><strong>Контекст:</strong> логика парсинга (NLP) и логика ранжирования (бизнес-правила) требуют разных инструментов.
+<strong>Решение:</strong> <code>AI Analysis Service</code> только извлекает сущности, <code>Recommendation Service</code> строит рейтинг.
+<strong>Trade-off:</strong> Упрощается независимое масштабирование (анализ можно масштабировать при пиках нагрузки на загрузку резюме).</p>
+<h3 id="adr-4-Использование-событийной-модели-для-статусов"><a class="header" href="#adr-4-Использование-событийной-модели-для-статусов">ADR-4. Использование событийной модели для статусов</a></h3>
+<p><strong>Контекст:</strong> система должна реагировать на завершение анализа мгновенно.
+<strong>Решение:</strong> Использовать паттерн Event-Driven для публикации события <code>ResumeAnalyzed</code>.
+<strong>Trade-off:</strong> Повышение связанности через контракты событий, но значительное ускорение реакции системы.</p>
+<div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>interfaces.md</strong>, адаптированный для вашего <strong>AI-сервиса подбора кандидатов</strong>.</p>
+<hr />
+<h1 id="Интерфейсы-icd-lite"><a class="header" href="#Интерфейсы-icd-lite">Интерфейсы ICD-lite</a></h1>
+<iframe src="https://gindemitpf/system-engineering-playbook/tree/main/src/swagger/swagger.html" width="100%" height="1500px" style="border:0;" allowfullscreen="allowfullscreen"></iframe>
+---
+<h2 id="51-post-apiv1resumes"><a class="header" href="#51-post-apiv1resumes">5.1. POST /api/v1/resumes</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Описание</th></tr></thead><tbody>
+<tr><td>Назначение</td><td>Загрузка резюме для последующего анализа</td></tr>
+<tr><td>Метод и путь</td><td><code>POST /api/v1/resumes</code></td></tr>
+<tr><td>Заголовки</td><td><code>Content-Type: multipart/form-data</code>, <code>X-Candidate-ID</code></td></tr>
+<tr><td>Ответ 202</td><td><code>resumeId</code>, <code>status: pending</code>, <code>message: "Resume accepted for processing"</code></td></tr>
+<tr><td>Ошибки</td><td><code>400 INVALID_FILE_FORMAT</code>, <code>413 FILE_TOO_LARGE</code>, <code>500 INTERNAL_ERROR</code></td></tr>
+<tr><td>Идемпотентность</td><td>Да (по хэшу файла)</td></tr>
+</tbody></table>
+</div>
+<h2 id="52-get-apiv1resumesresumeidanalysis"><a class="header" href="#52-get-apiv1resumesresumeidanalysis">5.2. GET /api/v1/resumes/{resumeId}/analysis</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Описание</th></tr></thead><tbody>
+<tr><td>Назначение</td><td>Получение результатов интеллектуального анализа резюме</td></tr>
+<tr><td>Метод и путь</td><td><code>GET /api/v1/resumes/{resumeId}/analysis</code></td></tr>
+<tr><td>Ответ 200</td><td><code>status</code>, <code>extractedSkills: []</code>, <code>experienceYears</code>, <code>summary</code></td></tr>
+<tr><td>Ошибки</td><td><code>404 RESUME_NOT_FOUND</code>, <code>422 PROCESSING_FAILED</code></td></tr>
+<tr><td>Идемпотентность</td><td>Да</td></tr>
+</tbody></table>
+</div>
+<h2 id="53-post-apiv1applications"><a class="header" href="#53-post-apiv1applications">5.3. POST /api/v1/applications</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Описание</th></tr></thead><tbody>
+<tr><td>Назначение</td><td>Привязка резюме к вакансии (создание отклика)</td></tr>
+<tr><td>Метод и путь</td><td><code>POST /api/v1/applications</code></td></tr>
+<tr><td>Тело запроса</td><td><code>resumeId</code>, <code>vacancyId</code></td></tr>
+<tr><td>Ответ 201</td><td><code>applicationId</code>, <code>matchScore</code>, <code>status</code></td></tr>
+<tr><td>Ошибки</td><td><code>400 INVALID_REQUEST</code>, <code>404 VACANCY_NOT_FOUND</code>, <code>409 ALREADY_APPLIED</code></td></tr>
+<tr><td>Идемпотентность</td><td>Да</td></tr>
+</tbody></table>
+</div>
+<h2 id="54-post-apiv1applicationsapplicationidinterview-questions"><a class="header" href="#54-post-apiv1applicationsapplicationidinterview-questions">5.4. POST /api/v1/applications/{applicationId}/interview-questions</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Описание</th></tr></thead><tbody>
+<tr><td>Назначение</td><td>Генерация уточняющих вопросов для кандидата через LLM</td></tr>
+<tr><td>Метод и путь</td><td><code>POST /api/v1/applications/{applicationId}/interview-questions</code></td></tr>
+<tr><td>Авторизация</td><td>Bearer JWT (HR)</td></tr>
+<tr><td>Ответ 200</td><td><code>applicationId</code>, <code>questions: [string]</code>, <code>generatedAt</code></td></tr>
+<tr><td>Ошибки</td><td><code>404 APPLICATION_NOT_FOUND</code>, <code>503 AI_SERVICE_UNAVAILABLE</code></td></tr>
+<tr><td>Идемпотентность</td><td>Нет</td></tr>
+</tbody></table>
+</div>
+<h2 id="55-get-apiv1vacanciesvacancyidcandidates"><a class="header" href="#55-get-apiv1vacanciesvacancyidcandidates">5.5. GET /api/v1/vacancies/{vacancyId}/candidates</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Параметр</th><th>Описание</th></tr></thead><tbody>
+<tr><td>Назначение</td><td>Получение списка кандидатов, ранжированных по релевантности</td></tr>
+<tr><td>Метод и путь</td><td><code>GET /api/v1/vacancies/{vacancyId}/candidates</code></td></tr>
+<tr><td>Ответ 200</td><td>Массив кандидатов: <code>applicationId</code>, <code>fullName</code>, <code>matchScore</code>, <code>status</code></td></tr>
+<tr><td>Ошибки</td><td><code>404 VACANCY_NOT_FOUND</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="56-Событие-resumeuploaded"><a class="header" href="#56-Событие-resumeuploaded">5.6. Событие ResumeUploaded</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead><tbody>
+<tr><td>eventId</td><td>UUID</td><td>Уникальный ID события</td></tr>
+<tr><td>eventType</td><td>string</td><td><code>ResumeUploaded</code></td></tr>
+<tr><td>resumeId</td><td>UUID</td><td>ID файла в хранилище</td></tr>
+<tr><td>candidateId</td><td>UUID</td><td>ID владельца резюме</td></tr>
+</tbody></table>
+</div>
+<h2 id="57-Событие-resumeanalyzed"><a class="header" href="#57-Событие-resumeanalyzed">5.7. Событие ResumeAnalyzed</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead><tbody>
+<tr><td>eventId</td><td>UUID</td><td>Уникальный ID события</td></tr>
+<tr><td>eventType</td><td>string</td><td><code>ResumeAnalyzed</code></td></tr>
+<tr><td>resumeId</td><td>UUID</td><td>ID резюме</td></tr>
+<tr><td>status</td><td>string</td><td><code>success</code> или <code>failed</code></td></tr>
+<tr><td>skillsCount</td><td>int</td><td>Количество найденных навыков</td></tr>
+</tbody></table>
+</div>
+<h2 id="58-Событие-matchscorecalculated"><a class="header" href="#58-Событие-matchscorecalculated">5.8. Событие MatchScoreCalculated</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead><tbody>
+<tr><td>eventId</td><td>UUID</td><td>Уникальный ID события</td></tr>
+<tr><td>eventType</td><td>string</td><td><code>MatchScoreCalculated</code></td></tr>
+<tr><td>applicationId</td><td>UUID</td><td>ID отклика</td></tr>
+<tr><td>score</td><td>float</td><td>Итоговый рейтинг (0.0 - 1.0)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Ошибки обработки событий:</strong> при сбоях в <code>AI Analysis Service</code> или <code>Recommendation Service</code>, события остаются в Message Broker (схема DLQ для переповторов).</p>
+<div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>risks.md</strong>, адаптированный для вашего <strong>AI-сервиса подбора кандидатов</strong>.</p>
+<hr />
+<h1 id="Риски"><a class="header" href="#Риски">Риски</a></h1>
+<h2 id="61-Шкала-оценки"><a class="header" href="#61-Шкала-оценки">6.1. Шкала оценки</a></h2>
+<p><strong>Вероятность (P):</strong></p>
+<ul>
+<li>1 — низкая;</li>
+<li>2 — средняя;</li>
+<li>3 — высокая.</li>
+</ul>
+<p><strong>Влияние (I):</strong></p>
+<ul>
+<li>1 — низкое;</li>
+<li>2 — среднее;</li>
+<li>3 — высокое.</li>
+</ul>
+<p><strong>Приоритет:</strong> <code>P × I</code>.</p>
+<h2 id="62-Реестр-рисков"><a class="header" href="#62-Реестр-рисков">6.2. Реестр рисков</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>ID</th><th>Риск</th><th>Причины</th><th>Последствия</th><th>P</th><th>I</th><th>Приоритет</th><th>Меры реагирования</th><th>Владелец</th><th>Остаточный риск</th></tr></thead><tbody>
+<tr><td>R-01</td><td>Неверная оценка кандидата (Галлюцинации LLM)</td><td>Ошибки интерпретации текста моделью</td><td>Необоснованный отказ или найм неподходящего сотрудника</td><td>3</td><td>3</td><td>9</td><td>Human-in-the-loop (финальное решение за HR), валидация критериев</td><td>Техлид</td><td>Средний</td></tr>
+<tr><td>R-02</td><td>Утечка персональных данных (ПДн)</td><td>Ошибки в коде обезличивания, доступ извне</td><td>Репутационные потери, нарушение законодательства</td><td>2</td><td>3</td><td>6</td><td>PII masking перед отправкой в AI, шифрование БД, аудит доступа</td><td>ИБ-администратор</td><td>Низкий</td></tr>
+<tr><td>R-03</td><td>Недоступность внешнего AI API</td><td>Сбой провайдера (OpenAI и др.), проблемы сети</td><td>Остановка процесса обработки резюме</td><td>2</td><td>3</td><td>6</td><td>Асинхронная очередь (retry/backoff), fallback на локальные модели</td><td>DevOps</td><td>Средний</td></tr>
+<tr><td>R-04</td><td>Перерасход лимитов API</td><td>Ошибки в логике вызовов, атака</td><td>Финансовые потери</td><td>2</td><td>2</td><td>4</td><td>Мониторинг лимитов, жесткие квоты на пользователя/вакансию</td><td>Администратор</td><td>Низкий</td></tr>
+<tr><td>R-05</td><td>Низкое качество парсинга резюме</td><td>Нестандартные форматы файлов, рукописные сканы</td><td>Система не может прочитать данные для анализа</td><td>3</td><td>2</td><td>6</td><td>OCR-препроцессинг, поддержка только стандартных форматов (PDF/DOCX)</td><td>Backend-разработчик</td><td>Средний</td></tr>
+<tr><td>R-06</td><td>Несоответствие критериям вакансии</td><td>Размытые требования в описании вакансии</td><td>Низкое качество мэтчинга</td><td>2</td><td>2</td><td>4</td><td>Структурирование требований вакансии в UI, обучение HR</td><td>HR-директор</td><td>Низкий</td></tr>
+<tr><td>R-07</td><td>Ошибки в генерации вопросов</td><td>Модель генерирует нерелевантные вопросы</td><td>Снижение профессионализма интервью</td><td>2</td><td>2</td><td>4</td><td>Валидация шаблонов вопросов, возможность ручного редактирования</td><td>HR</td><td>Низкий</td></tr>
+<tr><td>R-08</td><td>Задержка обработки очереди</td><td>Высокий наплыв кандидатов</td><td>HR получает данные с опозданием</td><td>2</td><td>2</td><td>4</td><td>Горизонтальное масштабирование воркеров, оптимизация API</td><td>Техлид</td><td>Низкий</td></tr>
+<tr><td>R-09</td><td>Предвзятость алгоритма</td><td>Обучающие данные модели содержат bias</td><td>Дискриминация кандидатов по полу/возрасту</td><td>2</td><td>3</td><td>6</td><td>Регулярный аудит скоринга, использование независимых метрик</td><td>Руководитель</td><td>Средний</td></tr>
+<tr><td>R-10</td><td>Несанкционированный доступ</td><td>Ошибки в конфигурации SSO/RBAC</td><td>Доступ к резюме посторонних лиц</td><td>1</td><td>3</td><td>3</td><td>Регулярные тесты прав доступа, логирование всех просмотров</td><td>Системный администратор</td><td>Низкий</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>vv.md</strong>, адаптированный под ваш <strong>AI-сервис подбора кандидатов</strong>. Структура сохранена в соответствии с вашим запросом.</p>
+<hr />
+<h1 id="vv-верификация-и-валидация"><a class="header" href="#vv-верификация-и-валидация">V&amp;V: верификация и валидация</a></h1>
+<h2 id="71-Методы-проверки"><a class="header" href="#71-Методы-проверки">7.1. Методы проверки</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Метод</th><th>Обозначение</th><th>Содержание</th></tr></thead><tbody>
+<tr><td>Тест</td><td>T</td><td>Функциональный, интеграционный, нагрузочный или негативный тест</td></tr>
+<tr><td>Анализ</td><td>A</td><td>Анализ логов, метрик, точности AI-моделей (Precision/Recall), SLA</td></tr>
+<tr><td>Инспекция</td><td>I</td><td>Проверка архитектуры, политик PII-маскирования, безопасности API</td></tr>
+<tr><td>Демонстрация</td><td>D</td><td>Демонстрация пользовательского сценария (End-to-End) на тестовом стенде</td></tr>
+</tbody></table>
+</div>
+<h2 id="72-Матрица-трассируемости"><a class="header" href="#72-Матрица-трассируемости">7.2. Матрица трассируемости</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Требование</th><th>Метод проверки</th><th>Артефакт / тест-кейс</th></tr></thead><tbody>
+<tr><td>SR-SH-1</td><td>D, T</td><td>TC-01</td></tr>
+<tr><td>SR-SH-2</td><td>D, T</td><td>TC-01</td></tr>
+<tr><td>SR-SH-3</td><td>D, T, I</td><td>TC-02</td></tr>
+<tr><td>SR-SH-4</td><td>D, T</td><td>TC-03</td></tr>
+<tr><td>SR-SH-5</td><td>D, A</td><td>TC-04</td></tr>
+<tr><td>SR-SH-6</td><td>D, T</td><td>TC-05</td></tr>
+<tr><td>SR-SH-7</td><td>I, T</td><td>TC-06</td></tr>
+<tr><td>SR-SH-8</td><td>A, D</td><td>TC-07</td></tr>
+<tr><td>SR-SH-9</td><td>I, T</td><td>TC-08</td></tr>
+<tr><td>SR-SH-10</td><td>I, A, T</td><td>TC-09</td></tr>
+<tr><td>SR-SH-11</td><td>I, A</td><td>TC-10</td></tr>
+<tr><td>SR-SYS-1</td><td>T</td><td>TC-02</td></tr>
+<tr><td>SR-SYS-2</td><td>T, A</td><td>TC-02</td></tr>
+<tr><td>SR-SYS-3</td><td>T, A</td><td>TC-04</td></tr>
+<tr><td>SR-SYS-4</td><td>T</td><td>TC-05</td></tr>
+<tr><td>SR-SYS-5</td><td>I, T</td><td>TC-11</td></tr>
+<tr><td>SR-SYS-6</td><td>T, I</td><td>TC-02</td></tr>
+<tr><td>SR-SYS-7</td><td>T</td><td>TC-12</td></tr>
+<tr><td>SR-SYS-8</td><td>A</td><td>TC-02</td></tr>
+<tr><td>SR-SYS-9</td><td>I, T</td><td>TC-08</td></tr>
+<tr><td>SR-SYS-10</td><td>T, A, I</td><td>TC-09</td></tr>
+<tr><td>SR-SYS-11</td><td>T, A</td><td>TC-13</td></tr>
+<tr><td>SR-SYS-12</td><td>T, A</td><td>TC-13</td></tr>
+<tr><td>SR-SYS-13</td><td>I</td><td>TC-10</td></tr>
+<tr><td>NFR-1</td><td>T, A</td><td>TC-14</td></tr>
+<tr><td>NFR-2</td><td>A</td><td>Мониторинг аптайма</td></tr>
+<tr><td>NFR-3</td><td>I, T</td><td>TC-10</td></tr>
+<tr><td>NFR-4</td><td>T, A</td><td>TC-14</td></tr>
+<tr><td>NFR-5</td><td>I, A</td><td>Инспекция метрик AI-сервиса</td></tr>
+<tr><td>NFR-6</td><td>A</td><td>Проверка RPO в БД</td></tr>
+<tr><td>NFR-7</td><td>D, A</td><td>TC-03</td></tr>
+<tr><td>NFR-8</td><td>I, T</td><td>TC-08</td></tr>
+</tbody></table>
+</div>
+<h2 id="73-Тест-кейсы"><a class="header" href="#73-Тест-кейсы">7.3. Тест-кейсы</a></h2>
+<h3 id="tc-01-Успешная-загрузка-резюме"><a class="header" href="#tc-01-Успешная-загрузка-резюме">TC-01. Успешная загрузка резюме</a></h3>
+<p><strong>Цель:</strong> проверить, что кандидат может загрузить файл, и система переходит в статус <code>processing</code>.
+<strong>Шаги:</strong> выбрать файл (PDF), нажать «Загрузить», проверить статус в API.
+<strong>Покрываемые требования:</strong> SR-SH-1, SR-SH-2.</p>
+<h3 id="tc-02-Корректный-анализ-навыков-ai"><a class="header" href="#tc-02-Корректный-анализ-навыков-ai">TC-02. Корректный анализ навыков (AI)</a></h3>
+<p><strong>Цель:</strong> проверить извлечение навыков из текста.
+<strong>Данные:</strong> эталонное резюме Java-разработчика.
+<strong>Ожидаемый результат:</strong> система извлекла «Java», «Spring», «SQL».
+<strong>Покрываемые требования:</strong> SR-SYS-2, SR-SYS-6.</p>
+<h3 id="tc-03-Проверка-обезличивания-pii-masking"><a class="header" href="#tc-03-Проверка-обезличивания-pii-masking">TC-03. Проверка обезличивания (PII Masking)</a></h3>
+<p><strong>Цель:</strong> убедиться, что ФИО и телефон не попадают в AI-модель.
+<strong>Метод:</strong> инспекция логов запросов к AI-провайдеру.
+<strong>Ожидаемый результат:</strong> данные маскируются на <code>[MASKED]</code>.
+<strong>Покрываемые требования:</strong> SR-SH-11, NFR-7.</p>
+<h3 id="tc-04-Ранжирование-кандидатов-match-score"><a class="header" href="#tc-04-Ранжирование-кандидатов-match-score">TC-04. Ранжирование кандидатов (Match Score)</a></h3>
+<p><strong>Цель:</strong> проверить адекватность рейтинга.
+<strong>Данные:</strong> два резюме (одно релевантное, другое нет).
+<strong>Ожидаемый результат:</strong> релевантное резюме имеет Match Score &gt; 80%, нерелевантное &lt; 30%.
+<strong>Покрываемые требования:</strong> SR-SH-5, SR-SYS-3.</p>
+<h3 id="tc-05-Генерация-вопросов-для-интервью"><a class="header" href="#tc-05-Генерация-вопросов-для-интервью">TC-05. Генерация вопросов для интервью</a></h3>
+<p><strong>Цель:</strong> проверка наличия вопросов в ответе API.
+<strong>Шаги:</strong> вызвать метод <code>/interview-questions</code>.
+<strong>Ожидаемый результат:</strong> возвращено 3-5 вопросов, связанных с профилем вакансии.
+<strong>Покрываемые требования:</strong> SR-SH-6, SR-SYS-4.</p>
+<h3 id="tc-08-Авторизация-и-доступ-rbac"><a class="header" href="#tc-08-Авторизация-и-доступ-rbac">TC-08. Авторизация и доступ (RBAC)</a></h3>
+<p><strong>Цель:</strong> проверить разделение прав HR и Администратора.
+<strong>Шаги:</strong> попытка HR изменить системные настройки.
+<strong>Ожидаемый результат:</strong> <code>403 Forbidden</code>.
+<strong>Покрываемые требования:</strong> SR-SH-9, SR-SYS-9, NFR-8.</p>
+<h3 id="tc-10-Шифрование-данных"><a class="header" href="#tc-10-Шифрование-данных">TC-10. Шифрование данных</a></h3>
+<p><strong>Цель:</strong> проверить, что резюме в БД не хранится в открытом виде.
+<strong>Метод:</strong> инспекция БД (скриншот хранилища).
+<strong>Покрываемые требования:</strong> SR-SYS-13.</p>
+<h3 id="tc-13-Обработка-ошибок-при-недоступности-ai"><a class="header" href="#tc-13-Обработка-ошибок-при-недоступности-ai">TC-13. Обработка ошибок при недоступности AI</a></h3>
+<p><strong>Цель:</strong> проверить retry-логику.
+<strong>Шаги:</strong> имитация 5xx ошибки от OpenAI.
+<strong>Ожидаемый результат:</strong> задача перешла в очередь повторов, в логах — <code>Retry attempt 1/3</code>.
+<strong>Покрываемые требования:</strong> SR-SYS-11, SR-SYS-12.</p>
+<h3 id="tc-14-Нагрузочное-тестирование"><a class="header" href="#tc-14-Нагрузочное-тестирование">TC-14. Нагрузочное тестирование</a></h3>
+<p><strong>Цель:</strong> проверка времени обработки резюме под нагрузкой.
+<strong>Шаги:</strong> подача 50 резюме одновременно.
+<strong>Ожидаемый результат:</strong> время обработки p95 &lt; 30 секунд.
+<strong>Покрываемые требования:</strong> NFR-1, NFR-4.</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Пример использования Swagger - system-engineering-playbook</title>
+        <title>Риски - system-engineering-playbook</title>
 
 
         <!-- Custom HTML head -->
@@ -12,35 +12,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="src/_assets/custom.css">
+        <link rel="stylesheet" href="../src/_assets/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -107,7 +107,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -142,7 +142,7 @@
                     <h1 class="menu-title">system-engineering-playbook</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -176,24 +176,48 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="swagger-example"><a class="header" href="#swagger-example">Swagger Example</a></h1>
-<h3 id="Подготовка-swagger-спецификации"><a class="header" href="#Подготовка-swagger-спецификации">Подготовка Swagger-спецификации</a></h3>
-<ol>
-<li>Создайте файл спецификации API в формате YAML</li>
-<li>Сохраните файл как <code>swagger.yaml</code> в директорию <code>src/swagger/</code></li>
-<li>Убедитесь, что спецификация соответствует стандарту OpenAPI 3.0</li>
-</ol>
-<h3 id="Вставка-спецификации-в-документацию"><a class="header" href="#Вставка-спецификации-в-документацию">Вставка спецификации в документацию</a></h3>
-<p>Для вставки спецификации в документацию используйте синтаксис из примера ниже.</p>
-<iframe src="swagger/swagger.html" width="100%" height="1500px" style="border:0;" allowfullscreen="allowfullscreen"></iframe>
+                        <p>Вот документ <strong>risks.md</strong>, адаптированный для вашего <strong>AI-сервиса подбора кандидатов</strong>.</p>
+<hr />
+<h1 id="Риски"><a class="header" href="#Риски">Риски</a></h1>
+<h2 id="61-Шкала-оценки"><a class="header" href="#61-Шкала-оценки">6.1. Шкала оценки</a></h2>
+<p><strong>Вероятность (P):</strong></p>
+<ul>
+<li>1 — низкая;</li>
+<li>2 — средняя;</li>
+<li>3 — высокая.</li>
+</ul>
+<p><strong>Влияние (I):</strong></p>
+<ul>
+<li>1 — низкое;</li>
+<li>2 — среднее;</li>
+<li>3 — высокое.</li>
+</ul>
+<p><strong>Приоритет:</strong> <code>P × I</code>.</p>
+<h2 id="62-Реестр-рисков"><a class="header" href="#62-Реестр-рисков">6.2. Реестр рисков</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>ID</th><th>Риск</th><th>Причины</th><th>Последствия</th><th>P</th><th>I</th><th>Приоритет</th><th>Меры реагирования</th><th>Владелец</th><th>Остаточный риск</th></tr></thead><tbody>
+<tr><td>R-01</td><td>Неверная оценка кандидата (Галлюцинации LLM)</td><td>Ошибки интерпретации текста моделью</td><td>Необоснованный отказ или найм неподходящего сотрудника</td><td>3</td><td>3</td><td>9</td><td>Human-in-the-loop (финальное решение за HR), валидация критериев</td><td>Техлид</td><td>Средний</td></tr>
+<tr><td>R-02</td><td>Утечка персональных данных (ПДн)</td><td>Ошибки в коде обезличивания, доступ извне</td><td>Репутационные потери, нарушение законодательства</td><td>2</td><td>3</td><td>6</td><td>PII masking перед отправкой в AI, шифрование БД, аудит доступа</td><td>ИБ-администратор</td><td>Низкий</td></tr>
+<tr><td>R-03</td><td>Недоступность внешнего AI API</td><td>Сбой провайдера (OpenAI и др.), проблемы сети</td><td>Остановка процесса обработки резюме</td><td>2</td><td>3</td><td>6</td><td>Асинхронная очередь (retry/backoff), fallback на локальные модели</td><td>DevOps</td><td>Средний</td></tr>
+<tr><td>R-04</td><td>Перерасход лимитов API</td><td>Ошибки в логике вызовов, атака</td><td>Финансовые потери</td><td>2</td><td>2</td><td>4</td><td>Мониторинг лимитов, жесткие квоты на пользователя/вакансию</td><td>Администратор</td><td>Низкий</td></tr>
+<tr><td>R-05</td><td>Низкое качество парсинга резюме</td><td>Нестандартные форматы файлов, рукописные сканы</td><td>Система не может прочитать данные для анализа</td><td>3</td><td>2</td><td>6</td><td>OCR-препроцессинг, поддержка только стандартных форматов (PDF/DOCX)</td><td>Backend-разработчик</td><td>Средний</td></tr>
+<tr><td>R-06</td><td>Несоответствие критериям вакансии</td><td>Размытые требования в описании вакансии</td><td>Низкое качество мэтчинга</td><td>2</td><td>2</td><td>4</td><td>Структурирование требований вакансии в UI, обучение HR</td><td>HR-директор</td><td>Низкий</td></tr>
+<tr><td>R-07</td><td>Ошибки в генерации вопросов</td><td>Модель генерирует нерелевантные вопросы</td><td>Снижение профессионализма интервью</td><td>2</td><td>2</td><td>4</td><td>Валидация шаблонов вопросов, возможность ручного редактирования</td><td>HR</td><td>Низкий</td></tr>
+<tr><td>R-08</td><td>Задержка обработки очереди</td><td>Высокий наплыв кандидатов</td><td>HR получает данные с опозданием</td><td>2</td><td>2</td><td>4</td><td>Горизонтальное масштабирование воркеров, оптимизация API</td><td>Техлид</td><td>Низкий</td></tr>
+<tr><td>R-09</td><td>Предвзятость алгоритма</td><td>Обучающие данные модели содержат bias</td><td>Дискриминация кандидатов по полу/возрасту</td><td>2</td><td>3</td><td>6</td><td>Регулярный аудит скоринга, использование независимых метрик</td><td>Руководитель</td><td>Средний</td></tr>
+<tr><td>R-10</td><td>Несанкционированный доступ</td><td>Ошибки в конфигурации SSO/RBAC</td><td>Доступ к резюме посторонних лиц</td><td>1</td><td>3</td><td>3</td><td>Регулярные тесты прав доступа, логирование всех просмотров</td><td>Системный администратор</td><td>Низкий</td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="drawio.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../report/interfaces.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next prefetch" href="../report/vv.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -201,10 +225,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="drawio.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../report/interfaces.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next prefetch" href="../report/vv.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -217,13 +244,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
