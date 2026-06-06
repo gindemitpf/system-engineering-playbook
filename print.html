@@ -181,9 +181,7 @@
 <p><strong>Назначение системы:</strong> автоматизация первичного анализа резюме, ранжирование кандидатов на основе соответствия требованиям вакансии и генерация персонализированных вопросов для собеседования.</p>
 <p><strong>Система (SoI):</strong> интеллектуальная система первичного отбора кандидатов, включающая Web UI, сервисы обработки резюме и AI-анализа, а также модуль рекомендаций.</p>
 <p><strong>Основные сценарии:</strong> загрузка резюме, интеллектуальный анализ навыков, сопоставление (matching), ранжирование и генерация вопросов.</p>
-<div style="break-before: page; page-break-before: always;"></div><p>Вот файл <strong>context.md</strong>, переработанный для вашего AI-сервиса подбора кандидатов с сохранением структуры исходного примера.</p>
-<hr />
-<h1 id="Контекст-и-границы-soi"><a class="header" href="#Контекст-и-границы-soi">Контекст и границы SoI</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Контекст-и-границы-soi"><a class="header" href="#Контекст-и-границы-soi">Контекст и границы SoI</a></h1>
 <h2 id="11-Цель-системы"><a class="header" href="#11-Цель-системы">1.1. Цель системы</a></h2>
 <p>Целью системы является автоматизация первичного отбора кандидатов, повышение объективности оценки навыков и снижение рутинной нагрузки на HR-департамент за счёт интеллектуального анализа резюме, автоматизированного сопоставления с требованиями вакансий и генерации уточняющих вопросов для собеседований.</p>
 <p>Система должна обеспечивать качественную обработку неструктурированных данных резюме, предотвращать предвзятость при первичном скрининге, учитывать специфику вакансий и предоставлять HR-специалистам актуальные данные для принятия решений о приглашении на интервью.</p>
@@ -252,9 +250,7 @@
 <li>Доступ к системе для HR и руководителей разграничен по ролям (RBAC).</li>
 <li>Администратор обеспечивает мониторинг стоимости и эффективности использования внешних AI-моделей.</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>CONOPS</strong> (Концепция эксплуатации), адаптированный для вашего <strong>AI-сервиса подбора кандидатов</strong>.</p>
-<hr />
-<h1 id="conops--opscon"><a class="header" href="#conops--opscon">CONOPS / OPSCON</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="conops--opscon"><a class="header" href="#conops--opscon">CONOPS / OPSCON</a></h1>
 <h2 id="21-Роли"><a class="header" href="#21-Роли">2.1. Роли</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Роль</th><th>Описание деятельности</th><th>Основные операции</th></tr></thead><tbody>
 <tr><td>Кандидат</td><td>Взаимодействует с системой для участия в отборе</td><td>Загрузка резюме, просмотр статуса, ответы на вопросы</td></tr>
@@ -325,9 +321,7 @@
 <li>Любое изменение рейтинга или просмотр ПДн фиксируется в Audit Log.</li>
 </ol>
 <p><strong>Результат:</strong> исключение несанкционированного доступа к резюме и прозрачная история работы с кандидатами.</p>
-<div style="break-before: page; page-break-before: always;"></div><p>Вот адаптированный файл <strong>requirements.md</strong> для вашего <strong>AI-сервиса подбора кандидатов</strong>, составленный по структуре вашего шаблона.</p>
-<hr />
-<h1 id="Требования"><a class="header" href="#Требования">Требования</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Требования"><a class="header" href="#Требования">Требования</a></h1>
 <h2 id="31-stakeholder-requirements"><a class="header" href="#31-stakeholder-requirements">3.1. Stakeholder requirements</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>ID</th><th>Заинтересованная сторона</th><th>Требование</th><th>Метод проверки</th></tr></thead><tbody>
 <tr><td>SR-SH-1</td><td>Кандидат</td><td>Система должна позволять кандидату загрузить резюме в форматах PDF или DOCX.</td><td>D, T</td></tr>
@@ -374,9 +368,7 @@
 <tr><td>NFR-9</td><td>Устойчивость</td><td>При недоступности AI-модели система должна сохранять запрос в очереди и retry-ить с exponential backoff.</td><td>T, I</td></tr>
 <tr><td>NFR-10</td><td>UX</td><td>Процесс загрузки резюме для кандидата не должен превышать 2 кликов.</td><td>D, A</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>architecture.md</strong>, адаптированный для вашего <strong>AI-сервиса подбора кандидатов</strong> с сохранением структуры C4-архитектуры и ADR.</p>
-<hr />
-<h1 id="Архитектура-системы"><a class="header" href="#Архитектура-системы">Архитектура системы</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="Архитектура-системы"><a class="header" href="#Архитектура-системы">Архитектура системы</a></h1>
 <h2 id="41-Общий-архитектурный-подход"><a class="header" href="#41-Общий-архитектурный-подход">4.1. Общий архитектурный подход</a></h2>
 <p>Система строится как модульная микросервисная информационная система с выделенными функциональными компонентами: управление резюме, интеллектуальный анализ (AI Analysis), рекомендации (Matching) и аудит. Анализ резюме является ресурсоёмкой и длительной операцией, поэтому система использует асинхронную модель обработки через очередь сообщений (Message Broker) для обеспечения отзывчивости UI.</p>
 <p>Критичные данные (профили кандидатов, результаты анализа) хранятся в PostgreSQL с соблюдением требований безопасности (шифрование, аудит доступа). Использование внешних AI-моделей (LLM) инкапсулировано в отдельном сервисе, что позволяет гибко менять провайдеров или модели без переписывания бизнес-логики.</p>
@@ -441,8 +433,7 @@ WHERE status IN ('processed', 'processing');
 <p><strong>Контекст:</strong> система должна реагировать на завершение анализа мгновенно.
 <strong>Решение:</strong> Использовать паттерн Event-Driven для публикации события <code>ResumeAnalyzed</code>.
 <strong>Trade-off:</strong> Повышение связанности через контракты событий, но значительное ускорение реакции системы.</p>
-<div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>interfaces.md</strong>, адаптированный для вашего <strong>AI-сервиса подбора кандидатов</strong>.</p>
-<hr />
+<div style="break-before: page; page-break-before: always;"></div><hr />
 <h1 id="Интерфейсы-icd-lite"><a class="header" href="#Интерфейсы-icd-lite">Интерфейсы ICD-lite</a></h1>
 <iframe src="https://gindemitpf/system-engineering-playbook/tree/main/src/swagger/swagger.html" width="100%" height="1500px" style="border:0;" allowfullscreen="allowfullscreen"></iframe>
 ---
@@ -519,9 +510,7 @@ WHERE status IN ('processed', 'processing');
 </tbody></table>
 </div>
 <p><strong>Ошибки обработки событий:</strong> при сбоях в <code>AI Analysis Service</code> или <code>Recommendation Service</code>, события остаются в Message Broker (схема DLQ для переповторов).</p>
-<div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>risks.md</strong>, адаптированный для вашего <strong>AI-сервиса подбора кандидатов</strong>.</p>
-<hr />
-<h1 id="Риски"><a class="header" href="#Риски">Риски</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Риски"><a class="header" href="#Риски">Риски</a></h1>
 <h2 id="61-Шкала-оценки"><a class="header" href="#61-Шкала-оценки">6.1. Шкала оценки</a></h2>
 <p><strong>Вероятность (P):</strong></p>
 <ul>
@@ -549,9 +538,7 @@ WHERE status IN ('processed', 'processing');
 <tr><td>R-09</td><td>Предвзятость алгоритма</td><td>Обучающие данные модели содержат bias</td><td>Дискриминация кандидатов по полу/возрасту</td><td>2</td><td>3</td><td>6</td><td>Регулярный аудит скоринга, использование независимых метрик</td><td>Руководитель</td><td>Средний</td></tr>
 <tr><td>R-10</td><td>Несанкционированный доступ</td><td>Ошибки в конфигурации SSO/RBAC</td><td>Доступ к резюме посторонних лиц</td><td>1</td><td>3</td><td>3</td><td>Регулярные тесты прав доступа, логирование всех просмотров</td><td>Системный администратор</td><td>Низкий</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><p>Вот документ <strong>vv.md</strong>, адаптированный под ваш <strong>AI-сервис подбора кандидатов</strong>. Структура сохранена в соответствии с вашим запросом.</p>
-<hr />
-<h1 id="vv-верификация-и-валидация"><a class="header" href="#vv-верификация-и-валидация">V&amp;V: верификация и валидация</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="vv-верификация-и-валидация"><a class="header" href="#vv-верификация-и-валидация">V&amp;V: верификация и валидация</a></h1>
 <h2 id="71-Методы-проверки"><a class="header" href="#71-Методы-проверки">7.1. Методы проверки</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Метод</th><th>Обозначение</th><th>Содержание</th></tr></thead><tbody>
 <tr><td>Тест</td><td>T</td><td>Функциональный, интеграционный, нагрузочный или негативный тест</td></tr>
