@@ -1,31 +1,164 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
-  title: API Documentation
+  title: AI-сервис подбора кандидатов
   version: 1.0.0
-  description: API documentation for the application
+  description: API для автоматизированного анализа резюме, ранжирования кандидатов и генерации вопросов для собеседований.
 servers:
-  - url: /api
-    description: API prefix
+  - url: https://api.hire-ai.example/v1
+    description: Production API
+
+tags:
+  - name: Candidates
+    description: Работа с данными кандидатов и резюме
+  - name: Vacancies
+    description: Управление вакансиями и откликами
+  - name: Analysis
+    description: Операции AI-анализа и скоринга
+  - name: Admin
+    description: Управление доступом и системные настройки
 
 paths:
-  /ping:
-    get:
-      tags:
-        - Health Check
+  /resumes:
+    post:
+      tags: [Candidates]
+      summary: Загрузить резюме
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
       responses:
-        "200":
+        "202":
+          description: Резюме принято в обработку
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Ok"
+                $ref: "#/components/schemas/ResumeInfo"
+
+  /resumes/{resumeId}/analysis:
+    get:
+      tags: [Analysis]
+      summary: Получить результаты AI-анализа
+      parameters:
+        - $ref: "#/components/parameters/ResumeId"
+      responses:
+        "200":
+          description: Данные анализа
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResumeAnalysis"
+
+  /applications:
+    post:
+      tags: [Vacancies]
+      summary: Создать отклик (привязать резюме к вакансии)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [resumeId, vacancyId]
+              properties:
+                resumeId: {type: string, format: uuid}
+                vacancyId: {type: string, format: uuid}
+      responses:
+        "201":
+          description: Отклик создан
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+
+  /applications/{applicationId}/interview-questions:
+    post:
+      tags: [Analysis]
+      summary: Сгенерировать вопросы для собеседования
+      parameters:
+        - $ref: "#/components/parameters/ApplicationId"
+      responses:
+        "200":
+          description: Список вопросов
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  questions: {type: array, items: {type: string}}
+
+  /vacancies/{vacancyId}/candidates:
+    get:
+      tags: [Vacancies]
+      summary: Получить список кандидатов с рейтингом
+      parameters:
+        - name: vacancyId
+          in: path
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Список кандидатов
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CandidateMatch"
 
 components:
+  parameters:
+    ResumeId:
+      name: resumeId
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+
   schemas:
-    Ok:
+    ResumeInfo:
       type: object
       properties:
-        ok:
-          type: boolean
-          example: true
-      required:
-        - ok
+        resumeId: {type: string, format: uuid}
+        status: {type: string, enum: [pending, processing, processed, failed]}
+
+    ResumeAnalysis:
+      type: object
+      properties:
+        extractedSkills: {type: array, items: {type: string}}
+        experienceYears: {type: integer}
+        summary: {type: string}
+        processedAt: {type: string, format: date-time}
+
+    Application:
+      type: object
+      properties:
+        applicationId: {type: string, format: uuid}
+        matchScore: {type: number, format: float}
+        status: {type: string}
+
+    CandidateMatch:
+      type: object
+      properties:
+        applicationId: {type: string, format: uuid}
+        fullName: {type: string}
+        matchScore: {type: number, format: float}
+        status: {type: string}
+
+    Error:
+      type: object
+      properties:
+        code: {type: string}
+        message: {type: string}
