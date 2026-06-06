@@ -1,7 +1,6 @@
 # Summary
 
 
-
 - [О работе](./report/overview.md)
 - [Контекст и границы](./report/context.md)
 - [CONOPS](./report/conops.md)
