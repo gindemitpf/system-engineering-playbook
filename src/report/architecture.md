@@ -17,6 +17,10 @@
 * Система мониторинга собирает метрики и логи;
 * Корпоративная ATS/CRM интегрируется для обмена данными о закрытых вакансиях.
 
+@drawio{https://github.com/gindemitpf/system-engineering-playbook/blob/main/src/diagrams/с1.drawio}
+
+
+@drawio{https://github.com/gindemitpf/system-engineering-playbook/blob/main/src/diagrams/с2.drawio}
 ## 4.3. C4 Container
 
 | Контейнер | Назначение | Основные связи |

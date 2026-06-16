@@ -1,0 +1,262 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.5 Chrome/134.0.6998.205 Electron/35.3.0 Safari/537.36" version="27.0.5">
+  <diagram name="C2 AI Recruitment Container" id="0">
+    <mxGraphModel dx="1895" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sys" value="AI-система подбора кандидатов" style="swimlane;html=1;startSize=30;" parent="1" vertex="1">
+          <mxGeometry x="190" y="50" width="1250" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="sys" source="web" target="api" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-23" value="REST API" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-4" vertex="1" connectable="0">
+          <mxGeometry x="-0.1878" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="web" value="Web UI&#xa;Кандидат / HR / Руководитель" style="rounded=1;fillColor=#e1d5e7;" parent="sys" vertex="1">
+          <mxGeometry x="40" y="80" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.007;entryY=0.673;entryDx=0;entryDy=0;entryPerimeter=0;" parent="sys" source="api" target="auth" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-24" value="JWT Validation" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-5" vertex="1" connectable="0">
+          <mxGeometry x="-0.2774" y="1" relative="1" as="geometry">
+            <mxPoint x="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="sys" source="api" target="resume" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-26" value="Store PDF/DOCX" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-7" vertex="1" connectable="0">
+          <mxGeometry x="-0.2735" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="sys" source="api" target="rec" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="api" value="API Gateway&#xa;Маршрутизация, RBAC, Валидация" style="rounded=1;fillColor=#d5e8d4;" parent="sys" vertex="1">
+          <mxGeometry x="330" y="80" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="auth" value="Auth Adapter&#xa;JWT / SSO" style="rounded=1;fillColor=#d5e8d4;" parent="sys" vertex="1">
+          <mxGeometry x="650" y="40" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="sys" source="resume" target="obj" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="290" />
+              <mxPoint x="260" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-27" value="Resume Metadata" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-10" vertex="1" connectable="0">
+          <mxGeometry x="0.9234" y="-1" relative="1" as="geometry">
+            <mxPoint x="-5" y="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="sys" source="resume" target="broker" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="290" />
+              <mxPoint x="260" y="660" />
+              <mxPoint x="910" y="660" />
+              <mxPoint x="910" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-28" value="ResumeUploaded&lt;div&gt;&amp;nbsp;Event&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-11" vertex="1" connectable="0">
+          <mxGeometry x="0.9389" y="2" relative="1" as="geometry">
+            <mxPoint y="-18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="sys" source="resume" target="pg" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="290" />
+              <mxPoint x="260" y="660" />
+              <mxPoint x="910" y="660" />
+              <mxPoint x="910" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="resume" value="Resume Service&#xa;Загрузка, парсинг, хранение" style="rounded=1;fillColor=#d5e8d4;" parent="sys" vertex="1">
+          <mxGeometry x="330" y="240" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="analysis" value="AI Analysis Service&#xa;Извлечение навыков, NLP" style="rounded=1;fillColor=#d5e8d4;" parent="sys" vertex="1">
+          <mxGeometry x="650" y="240" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="sys" source="rec" target="pg" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="810" y="410" />
+              <mxPoint x="1070" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-34" value="&lt;div&gt;Кандидаты&lt;/div&gt;&lt;div&gt;Вакансии&lt;/div&gt;&lt;div&gt;Заявки&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-16" vertex="1" connectable="0">
+          <mxGeometry x="0.0808" y="-1" relative="1" as="geometry">
+            <mxPoint y="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rec" value="Recommendation Service&#xa;Скоринг и вопросы" style="rounded=1;fillColor=#d5e8d4;" parent="sys" vertex="1">
+          <mxGeometry x="650" y="430" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="sys" source="audit" target="pg" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="440" y="550" />
+              <mxPoint x="1070" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="audit" value="Audit Service&#xa;Журналирование действий" style="rounded=1;fillColor=#d5e8d4;" parent="sys" vertex="1">
+          <mxGeometry x="330" y="430" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="sys" source="broker" target="analysis" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1070" y="220" />
+              <mxPoint x="760" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-29" value="Задача по анализу резюме" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-13" vertex="1" connectable="0">
+          <mxGeometry x="0.5879" y="1" relative="1" as="geometry">
+            <mxPoint x="28" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="broker" value="Message Broker" style="shape=hexagon;fillColor=#ffe6cc;" parent="sys" vertex="1">
+          <mxGeometry x="980" y="240" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="pg" value="PostgreSQL" style="shape=cylinder;fillColor=#f8cecc;" parent="sys" vertex="1">
+          <mxGeometry x="980" y="430" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="obj" value="Object Storage" style="shape=cylinder;fillColor=#cce5ff;" parent="sys" vertex="1">
+          <mxGeometry x="980" y="610" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.162;entryY=-0.003;entryDx=0;entryDy=0;entryPerimeter=0;" parent="sys" source="analysis" target="rec" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="686" y="385" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-33" value="&lt;div style=&quot;font-size: 12px; background-color: rgb(236, 236, 236);&quot;&gt;&lt;div style=&quot;background-color: rgb(236, 236, 236);&quot;&gt;Текст резюме&lt;/div&gt;&lt;div style=&quot;background-color: rgb(236, 236, 236);&quot;&gt;Описание вакансии&lt;/div&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-32" vertex="1" connectable="0">
+          <mxGeometry x="-0.4267" relative="1" as="geometry">
+            <mxPoint x="-6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cand" value="Кандидат" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry y="120" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="hr" target="web" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="160" y="270" />
+              <mxPoint x="160" y="165" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-22" value="HTTPS" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-2" vertex="1" connectable="0">
+          <mxGeometry x="-0.8564" y="-2" relative="1" as="geometry">
+            <mxPoint x="5" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hr" value="HR-специалист" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="mgr" target="web" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-21" value="HTTPS" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-3" vertex="1" connectable="0">
+          <mxGeometry x="-0.7969" y="-2" relative="1" as="geometry">
+            <mxPoint x="-11" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mgr" value="Руководитель" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;" parent="1" vertex="1">
+          <mxGeometry y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="ai" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="940" y="480" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1590" y="410" />
+              <mxPoint x="940" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ai" value="AI Provider (LLM)" style="rounded=1;fillColor=#fff2cc;" parent="1" vertex="1">
+          <mxGeometry x="1500" y="220" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sso_corp" value="Корпоративный SSO" style="rounded=1;fillColor=#fff2cc;" parent="1" vertex="1">
+          <mxGeometry x="1500" y="80" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ats" value="ATS / CRM" style="rounded=1;fillColor=#fff2cc;" parent="1" vertex="1">
+          <mxGeometry x="1500" y="440" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mon" value="Мониторинг" style="rounded=1;fillColor=#fff2cc;" parent="1" vertex="1">
+          <mxGeometry x="1500" y="620" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.015;entryY=0.343;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="cand" target="web" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-20" value="HTTPS" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-1" vertex="1" connectable="0">
+          <mxGeometry x="-0.4983" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="auth" target="sso_corp" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1170" y="120" />
+              <mxPoint x="1170" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-25" value="OAuth2 / OIDC" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-6" vertex="1" connectable="0">
+          <mxGeometry x="-0.237" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="analysis" target="ai" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-30" value="&lt;div&gt;Текст резюме&lt;/div&gt;&lt;div&gt;Описание вакансии&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-14" vertex="1" connectable="0">
+          <mxGeometry x="0.3786" relative="1" as="geometry">
+            <mxPoint x="37" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="rec" target="ats" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1600" y="440" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="970" y="430" />
+              <mxPoint x="1590" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-35" value="Отобранные кандидаты" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="kdazX2OaWGllof0t94KE-17" vertex="1" connectable="0">
+          <mxGeometry x="0.1928" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kdazX2OaWGllof0t94KE-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.394;entryY=1.025;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="analysis" target="mon" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1570" y="780" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="801" y="330" />
+              <mxPoint x="801" y="790" />
+              <mxPoint x="1571" y="790" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
